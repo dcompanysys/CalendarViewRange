@@ -26,6 +26,7 @@ class SlyCalendarData {
     private Integer selectedColor = null;
     private Integer selectedTextColor = null;
     private Integer timeTheme = null;
+    private Boolean showTime = true;
 
     public Date getShowDate() {
         if (showDate == null) {
@@ -144,5 +145,13 @@ class SlyCalendarData {
 
     public void setTimeTheme(Integer timeTheme) {
         this.timeTheme = timeTheme;
+    }
+
+    public void setShowTime(Boolean showTime) {
+        this.showTime = showTime;
+    }
+
+    public Boolean getShowTime() {
+        return showTime;
     }
 }

@@ -124,5 +124,9 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
         return this;
     }
 
+    public SlyCalendarDialog setShowTimeButon(Boolean show) {
+        slyCalendarData.setShowTime(show);
+        return this;
+    }
 
 }

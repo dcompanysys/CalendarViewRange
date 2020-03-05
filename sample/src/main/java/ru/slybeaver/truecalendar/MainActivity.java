@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
             @Override
             public void onClick(View v) {
                 new SlyCalendarDialog()
+                        .setShowTimeButon(false)
                         .setSingle(false)
                         .setFirstMonday(false)
                         .setCallback(MainActivity.this)

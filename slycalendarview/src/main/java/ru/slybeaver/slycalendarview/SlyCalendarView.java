@@ -71,6 +71,9 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         inflate(getContext(), R.layout.slycalendar_frame, this);
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SlyCalendarView, defStyle, 0);
 
+       if(slyCalendarData.getShowTime() == null) {
+           slyCalendarData.setShowTime(typedArray.getBoolean(R.styleable.SlyCalendarView_showTimeButton, true));
+       }
         if (slyCalendarData.getBackgroundColor() == null) {
             slyCalendarData.setBackgroundColor(typedArray.getColor(R.styleable.SlyCalendarView_backgroundColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defBackgroundColor)));
         }
@@ -188,26 +191,32 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             }
         });
 
-        findViewById(R.id.txtTime).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        TextView timeButon = findViewById(R.id.txtTime);
 
-                int style = R.style.SlyCalendarTimeDialogTheme;
-                if (slyCalendarData.getTimeTheme() != null) {
-                    style = slyCalendarData.getTimeTheme();
-                }
+        if(slyCalendarData.getShowTime()) {
+            timeButon.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                TimePickerDialog tpd = new TimePickerDialog(getContext(), style, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        slyCalendarData.setSelectedHour(hourOfDay);
-                        slyCalendarData.setSelectedMinutes(minute);
-                        showTime();
+                    int style = R.style.SlyCalendarTimeDialogTheme;
+                    if (slyCalendarData.getTimeTheme() != null) {
+                        style = slyCalendarData.getTimeTheme();
                     }
-                }, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes(), true);
-                tpd.show();
-            }
-        });
+
+                    TimePickerDialog tpd = new TimePickerDialog(getContext(), style, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            slyCalendarData.setSelectedHour(hourOfDay);
+                            slyCalendarData.setSelectedMinutes(minute);
+                            showTime();
+                        }
+                    }, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes(), true);
+                    tpd.show();
+                }
+            });
+        }else {
+            timeButon.setVisibility(GONE);
+        }
 
         ViewPager vpager = findViewById(R.id.content);
         vpager.getAdapter().notifyDataSetChanged();
